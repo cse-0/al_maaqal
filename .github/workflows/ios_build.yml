@@ -9,8 +9,11 @@ jobs:
         with:
           channel: 'stable'
       - run: flutter pub get
-      - run: flutter build ipa --release --no-codesign
+      - run: flutter build ios --release --no-codesign
+      - run: mkdir Payload
+      - run: mv build/ios/iphoneos/Runner.app Payload/
+      - run: zip -qq -r app.ipa Payload
       - uses: actions/upload-artifact@v4
         with:
           name: iOS-IPA
-          path: build/ios/ipa/*.ipa
+          path: app.ipa
